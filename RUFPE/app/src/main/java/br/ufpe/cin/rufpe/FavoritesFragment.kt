@@ -66,11 +66,11 @@ class FavoritesFragment : Fragment() {
 
             init {
                 item.setOnClickListener { _ ->
-                    Toast.makeText(c, name.text, Toast.LENGTH_LONG)
+                    Toast.makeText(c, name.text, Toast.LENGTH_SHORT).show()
                 }
 
                 button.setOnClickListener { _ ->
-                    Toast.makeText(c, name.text, Toast.LENGTH_LONG)
+                    Toast.makeText(c, name.text, Toast.LENGTH_SHORT).show()
                 }
             }
         }
