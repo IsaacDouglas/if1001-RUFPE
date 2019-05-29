@@ -3,6 +3,7 @@ package br.ufpe.cin.rufpe
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -10,15 +11,16 @@ import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var textMessage: TextView
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
-                textMessage.setText(R.string.title_menu)
+                val fragment = MenuFragment.newInstance()
+                openFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
-                textMessage.setText(R.string.title_favorites)
+                val fragment = FavoritesFragment.newInstance()
+                openFragment(fragment)
                 return@OnNavigationItemSelectedListener true
             }
         }
@@ -30,8 +32,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        textMessage = findViewById(R.id.message)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+
+        val fragment = MenuFragment.newInstance()
+        openFragment(fragment)
     }
 
     @SuppressLint("ResourceType")
@@ -46,7 +50,17 @@ class MainActivity : AppCompatActivity() {
         // Identifica que apertou no botão
         if (id == R.id.action_refresh) {
 
+        }else if (id == R.id.action_settings) {
+
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
 }
