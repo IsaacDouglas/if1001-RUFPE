@@ -61,8 +61,8 @@ class FavoritesFragment : Fragment() {
         }
 
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
-            val name: TextView = item.item_name
-            private val button: Button = item.item_button
+            val name: TextView = item.item_favorites_name
+            private val button: Button = item.item_favorites_button
 
             init {
                 item.setOnClickListener { _ ->
