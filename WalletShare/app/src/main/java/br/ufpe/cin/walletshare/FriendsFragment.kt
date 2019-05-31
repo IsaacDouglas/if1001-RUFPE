@@ -58,7 +58,6 @@ class FriendsFragment : Fragment() {
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
             val item = items[position]
             holder.title.text = item
-            holder.index = position
         }
 
         override fun getItemCount(): Int {
@@ -72,14 +71,14 @@ class FriendsFragment : Fragment() {
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
             val title: TextView = item.item_friends_title
             private val button: Button = item.item_friends_button
-            var index: Int = 0
 
             init {
                 item.setOnClickListener {
                     Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
                 }
                 button.setOnClickListener {
-                    items.removeAt(index)
+                    items.remove(title.text)
+                    friends_recycler_view.adapter?.notifyDataSetChanged()
                 }
             }
         }
@@ -96,13 +95,9 @@ class FriendsFragment : Fragment() {
 
         builder.setPositiveButton(android.R.string.ok) { dialog, _ ->
             val text = editText.text
-            var isValid = true
             if (text == null || text.isBlank()) {
                 editText.error = "Error"
-                isValid = false
-            }
-
-            if (isValid) {
+            }else{
                 complete(text.toString())
                 dialog.dismiss()
             }
