@@ -1,18 +1,20 @@
 package br.ufpe.cin.walletshare.entity
 
+import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.util.*
-import kotlin.collections.ArrayList
 
 @Entity
 class Command {
     
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0
+    var id: Long = 0L
     var name: String = ""
     var date: Date = Date()
+    @Embedded
     var people: MutableList<Friend> = mutableListOf()
+    @Embedded
     var items: MutableList<Item> = mutableListOf()
 
     fun total(): Double {

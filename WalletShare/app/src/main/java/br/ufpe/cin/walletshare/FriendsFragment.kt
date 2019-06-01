@@ -49,7 +49,8 @@ class FriendsFragment : Fragment() {
 
         friends_action.setOnClickListener {
             dialogInputText("NEW FRIEND") { name ->
-                val friend = Friend(0, name)
+                val friend = Friend()
+                friend.name = name
                 friendDao.add(friend)
                 items.add(friend)
             }

@@ -4,8 +4,8 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
 @Entity
-class Friend (
+class Friend {
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-    val name: String
-)
+    var id: Long = 0L
+    var name: String = ""
+}
