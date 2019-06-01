@@ -1,11 +1,12 @@
-package br.ufpe.cin.walletshare
+package br.ufpe.cin.walletshare.Activity
 
 import android.support.v4.app.Fragment
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.widget.TextView
-import android.widget.Toast
+import br.ufpe.cin.walletshare.Fragment.FriendsFragment
+import br.ufpe.cin.walletshare.Fragment.HistoricFragment
+import br.ufpe.cin.walletshare.R
 
 class MainActivity : AppCompatActivity() {
 

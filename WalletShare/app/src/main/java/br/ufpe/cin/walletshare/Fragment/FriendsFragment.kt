@@ -1,4 +1,4 @@
-package br.ufpe.cin.walletshare
+package br.ufpe.cin.walletshare.Fragment
 
 
 import android.app.AlertDialog
@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.db.AppDatabase
 import br.ufpe.cin.walletshare.db.FriendDao
 import br.ufpe.cin.walletshare.entity.Friend
@@ -58,7 +59,8 @@ class FriendsFragment : Fragment() {
     }
 
     companion object Factory {
-        fun newInstance(): FriendsFragment = FriendsFragment()
+        fun newInstance(): FriendsFragment =
+            FriendsFragment()
         var items: ArrayList<Friend> = ArrayList()
     }
 

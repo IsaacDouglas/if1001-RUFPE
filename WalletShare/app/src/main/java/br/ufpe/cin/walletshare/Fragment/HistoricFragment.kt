@@ -1,7 +1,6 @@
-package br.ufpe.cin.walletshare
+package br.ufpe.cin.walletshare.Fragment
 
 
-import android.arch.persistence.room.Room
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -13,8 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import br.ufpe.cin.walletshare.db.AppDatabase
-import br.ufpe.cin.walletshare.db.CommandDao
+import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Command
 import br.ufpe.cin.walletshare.util.currencyFormatting
 import br.ufpe.cin.walletshare.util.toSimpleString
@@ -57,7 +55,8 @@ class HistoricFragment : Fragment() {
     }
 
     companion object Factory {
-        fun newInstance(): HistoricFragment = HistoricFragment()
+        fun newInstance(): HistoricFragment =
+            HistoricFragment()
         var commands: MutableList<Command> = mutableListOf()
     }
 
