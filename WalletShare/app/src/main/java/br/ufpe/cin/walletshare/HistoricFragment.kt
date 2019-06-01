@@ -12,6 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import br.ufpe.cin.walletshare.entity.Command
+import br.ufpe.cin.walletshare.entity.Friend
+import br.ufpe.cin.walletshare.util.currencyFormatting
+import br.ufpe.cin.walletshare.util.toSimpleString
 import kotlinx.android.synthetic.main.fragment_historic.*
 import kotlinx.android.synthetic.main.item_historic.view.*
 
@@ -27,23 +31,24 @@ class HistoricFragment : Fragment() {
 
         historic_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ItemAdapter(context, items)
+            adapter = ItemAdapter(context, commands)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         historic_action.setOnClickListener {
-            Toast.makeText(context, "Action", Toast.LENGTH_SHORT).show()
+            commands.add(Command())
+            historic_recycler_view.adapter?.notifyDataSetChanged()
         }
     }
 
     companion object Factory {
         fun newInstance(): HistoricFragment = HistoricFragment()
-        var items = arrayOf("ONE", "TWO")
+        var commands: MutableList<Command> = mutableListOf()
     }
 
     internal inner class ItemAdapter (
         var c: Context,
-        var items: Array<String>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
+        var items: MutableList<Command>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
             val view = LayoutInflater.from(c).inflate(R.layout.item_historic, parent, false)
@@ -52,7 +57,9 @@ class HistoricFragment : Fragment() {
 
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
             val item = items[position]
-            holder.title.text = item
+            holder.date.text = item.date.toSimpleString()
+            holder.participants.text = item.people.map { it.name }.joinToString { it }
+            holder.price.text = item.total().currencyFormatting()
         }
 
         override fun getItemCount(): Int {
@@ -64,11 +71,13 @@ class HistoricFragment : Fragment() {
         }
 
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
-            val title: TextView = item.item_historic_title
+            val date: TextView = item.item_historic_date
+            val participants: TextView = item.item_historic_participants
+            val price: TextView = item.item_historic_price
 
             init {
-                item.setOnClickListener { _ ->
-                    Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
+                item.setOnClickListener {
+                    Toast.makeText(c, date.text, Toast.LENGTH_SHORT).show()
                 }
             }
         }
