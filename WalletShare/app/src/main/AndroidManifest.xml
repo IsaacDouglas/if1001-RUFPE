@@ -10,10 +10,16 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
-                android:name=".Activity.MainActivity"
+                android:name=".Activity.ParticipantsActivity"
+                android:label="@string/title_participants"
                 android:screenOrientation="portrait"
-                android:windowSoftInputMode="adjustPan"
-                android:label="@string/app_name">
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+                android:name=".Activity.MainActivity"
+                android:label="@string/app_name"
+                android:screenOrientation="portrait"
+                android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

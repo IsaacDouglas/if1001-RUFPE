@@ -2,6 +2,7 @@ package br.ufpe.cin.walletshare.Fragment
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -12,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import br.ufpe.cin.walletshare.Activity.ParticipantsActivity
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Command
 import br.ufpe.cin.walletshare.util.currencyFormatting
@@ -47,10 +49,13 @@ class HistoricFragment : Fragment() {
         }
 
         historic_action.setOnClickListener {
-            val command = Command()
-            commands.add(command)
+//            val command = Command()
+//            commands.add(command)
 //            commandDao.add(command)
-            historic_recycler_view.adapter?.notifyDataSetChanged()
+//            historic_recycler_view.adapter?.notifyDataSetChanged()
+
+            val intent = Intent(context, ParticipantsActivity::class.java)
+            startActivity(intent)
         }
     }
 
