@@ -2,7 +2,6 @@ package br.ufpe.cin.walletshare.Fragment
 
 
 import android.app.AlertDialog
-import android.arch.persistence.room.Room
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -16,26 +15,16 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import br.ufpe.cin.walletshare.R
-import br.ufpe.cin.walletshare.db.AppDatabase
-import br.ufpe.cin.walletshare.db.FriendDao
 import br.ufpe.cin.walletshare.entity.Friend
+import br.ufpe.cin.walletshare.util.Data
 import kotlinx.android.synthetic.main.dialog_input_text.view.*
 import kotlinx.android.synthetic.main.fragment_friends.*
 import kotlinx.android.synthetic.main.item_friends.view.*
 
 class FriendsFragment : Fragment() {
 
-    private lateinit var friendDao: FriendDao
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-
-        val database = Room.databaseBuilder(requireContext(), AppDatabase::class.java,"wallet-database")
-            .allowMainThreadQueries()
-            .build()
-        friendDao = database.friendDao()
-        items = ArrayList(friendDao.all())
-
         return inflater.inflate(R.layout.fragment_friends, container, false)
     }
 
@@ -44,29 +33,27 @@ class FriendsFragment : Fragment() {
 
         friends_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ItemAdapter(context, items)
+            val list = Data.getInstance(context).friendDao.all().toMutableList()
+            adapter = ItemAdapter(context, list)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         friends_action.setOnClickListener {
-            dialogInputText("NEW FRIEND") { name ->
+            dialogInputText("New friend") { name ->
                 val friend = Friend()
                 friend.name = name
-                friendDao.add(friend)
-                items.add(friend)
+                Data.getInstance(requireContext()).friendDao.add(friend)
             }
         }
     }
 
     companion object Factory {
-        fun newInstance(): FriendsFragment =
-            FriendsFragment()
-        var items: ArrayList<Friend> = ArrayList()
+        fun newInstance(): FriendsFragment = FriendsFragment()
     }
 
     internal inner class ItemAdapter (
         var c: Context,
-        var items: ArrayList<Friend>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
+        var items: MutableList<Friend>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
             val view = LayoutInflater.from(c).inflate(R.layout.item_friends, parent, false)
@@ -98,14 +85,14 @@ class FriendsFragment : Fragment() {
                 }
                 button.setOnClickListener {
                     items.remove(friend)
-                    friendDao.remove(friend!!)
+                    Data.getInstance(c).friendDao.remove(friend!!)
                     friends_recycler_view.adapter?.notifyDataSetChanged()
                 }
             }
         }
     }
 
-    private fun dialogInputText(title: String, complete: (String) -> Boolean) {
+    private fun dialogInputText(title: String, complete: (String) -> Unit) {
         val builder = AlertDialog.Builder(context)
         builder.setTitle(title)
 

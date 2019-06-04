@@ -16,6 +16,7 @@ import android.widget.Toast
 import br.ufpe.cin.walletshare.Activity.ParticipantsActivity
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Command
+import br.ufpe.cin.walletshare.util.Data
 import br.ufpe.cin.walletshare.util.currencyFormatting
 import br.ufpe.cin.walletshare.util.toSimpleString
 import kotlinx.android.synthetic.main.fragment_historic.*
@@ -23,18 +24,7 @@ import kotlinx.android.synthetic.main.item_historic.view.*
 
 class HistoricFragment : Fragment() {
 
-//    private lateinit var commandDao: CommandDao
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
-        /*
-        val database = Room.databaseBuilder(requireContext(), AppDatabase::class.java,"wallet-database")
-            .allowMainThreadQueries()
-            .build()
-        commandDao = database.commandDao()
-        commands = ArrayList(commandDao.all())
-        */
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_historic, container, false)
     }
@@ -49,11 +39,6 @@ class HistoricFragment : Fragment() {
         }
 
         historic_action.setOnClickListener {
-//            val command = Command()
-//            commands.add(command)
-//            commandDao.add(command)
-//            historic_recycler_view.adapter?.notifyDataSetChanged()
-
             val intent = Intent(context, ParticipantsActivity::class.java)
             startActivity(intent)
         }
