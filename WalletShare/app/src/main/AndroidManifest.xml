@@ -10,6 +10,12 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity
+                android:name=".Activity.CommandActivity"
+                android:label="@string/title_activity_command"
+                android:screenOrientation="portrait"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
                 android:name=".Activity.ParticipantsActivity"
                 android:label="@string/title_participants"
                 android:screenOrientation="portrait"

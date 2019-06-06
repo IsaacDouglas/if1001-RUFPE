@@ -4,4 +4,7 @@
     <string name="title_friends">Friends</string>
     <string name="title_delete">Delete</string>
     <string name="title_participants">Participants</string>
+    <string name="title_activity_command">CommandActivity</string>
+    <string name="title_tab_text_1">Command</string>
+    <string name="title_tab_text_2">Friends</string>
 </resources>

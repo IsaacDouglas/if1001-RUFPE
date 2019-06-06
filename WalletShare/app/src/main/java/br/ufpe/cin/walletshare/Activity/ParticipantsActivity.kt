@@ -1,6 +1,7 @@
 package br.ufpe.cin.walletshare.Activity
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration
@@ -43,7 +44,9 @@ class ParticipantsActivity : AppCompatActivity() {
         }
 
         participants_action.setOnClickListener {
-            Toast.makeText(applicationContext, "Action", Toast.LENGTH_SHORT).show()
+            val intent = Intent(applicationContext, CommandActivity::class.java)
+            startActivity(intent)
+            finish()
         }
     }
 
