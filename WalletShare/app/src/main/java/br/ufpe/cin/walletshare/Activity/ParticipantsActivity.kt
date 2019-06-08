@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Friend
 import br.ufpe.cin.walletshare.util.Data
@@ -44,10 +43,23 @@ class ParticipantsActivity : AppCompatActivity() {
         }
 
         participants_action.setOnClickListener {
+
+            var selectedFriend: MutableList<Friend> = mutableListOf()
+            for (i in 0 until selected.count()) {
+                if (selected[i]) {
+                    selectedFriend.add(list[i])
+                }
+            }
+            people = selectedFriend
+
             val intent = Intent(applicationContext, CommandActivity::class.java)
             startActivity(intent)
             finish()
         }
+    }
+
+    companion object Factory {
+        var people: MutableList<Friend> = mutableListOf()
     }
 
     internal inner class ItemAdapter (

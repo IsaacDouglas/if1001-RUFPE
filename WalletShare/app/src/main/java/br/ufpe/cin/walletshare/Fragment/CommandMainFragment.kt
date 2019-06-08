@@ -12,14 +12,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import br.ufpe.cin.walletshare.Activity.CommandActivity
 
 import br.ufpe.cin.walletshare.R
-import br.ufpe.cin.walletshare.entity.Friend
-import br.ufpe.cin.walletshare.util.Data
-import kotlinx.android.synthetic.main.fragment_command_friends.*
+import br.ufpe.cin.walletshare.entity.Item
+import br.ufpe.cin.walletshare.util.currencyFormatting
+import br.ufpe.cin.walletshare.util.percent
 import kotlinx.android.synthetic.main.fragment_command_main.*
 import kotlinx.android.synthetic.main.item_command_main.view.*
-import kotlinx.android.synthetic.main.item_friends_simple.view.*
 
 class CommandMainFragment : Fragment() {
 
@@ -33,10 +33,13 @@ class CommandMainFragment : Fragment() {
 
         command_main_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            val list = Data.getInstance(context).friendDao.all().toMutableList()
-            adapter = ItemAdapter(context, list)
+            adapter = ItemAdapter(context, CommandActivity.command.items)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
+
+        val value = CommandActivity.command.items.map { it.price }.sum()
+        command_main_total.text = value.currencyFormatting()
+        command_main_info.text = "+10%, " + value.percent(0.1).currencyFormatting()
     }
 
     companion object Factory {
@@ -45,7 +48,7 @@ class CommandMainFragment : Fragment() {
 
     internal inner class ItemAdapter (
         var c: Context,
-        var items: MutableList<Friend>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
+        var items: MutableList<Item>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
             val view = LayoutInflater.from(c).inflate(R.layout.item_command_main, parent, false)
@@ -55,6 +58,7 @@ class CommandMainFragment : Fragment() {
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
             val item = items[position]
             holder.title.text = item.name
+            holder.subtitle.text = item.price.currencyFormatting()
         }
 
         override fun getItemCount(): Int {

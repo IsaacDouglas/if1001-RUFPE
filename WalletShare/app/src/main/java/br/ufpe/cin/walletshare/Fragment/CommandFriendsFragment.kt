@@ -9,15 +9,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import br.ufpe.cin.walletshare.Activity.CommandActivity
 
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Friend
-import br.ufpe.cin.walletshare.util.Data
 import kotlinx.android.synthetic.main.fragment_command_friends.*
-import kotlinx.android.synthetic.main.item_friends.view.*
 import kotlinx.android.synthetic.main.item_friends_simple.view.*
 
 class CommandFriendsFragment : Fragment() {
@@ -32,8 +30,7 @@ class CommandFriendsFragment : Fragment() {
 
         command_friends_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            val list = Data.getInstance(context).friendDao.all().toMutableList()
-            adapter = ItemAdapter(context, list)
+            adapter = ItemAdapter(context, CommandActivity.command.people)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
     }
