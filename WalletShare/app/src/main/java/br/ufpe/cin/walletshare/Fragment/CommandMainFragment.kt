@@ -2,6 +2,7 @@ package br.ufpe.cin.walletshare.Fragment
 
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DividerItemDecoration
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import br.ufpe.cin.walletshare.Activity.CommandActivity
+import br.ufpe.cin.walletshare.Activity.ItemActivity
 
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Item
@@ -35,6 +37,11 @@ class CommandMainFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = ItemAdapter(context, CommandActivity.command.items)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        }
+
+        command_main_action.setOnClickListener {
+            val intent = Intent(context, ItemActivity::class.java)
+            startActivity(intent)
         }
 
         val value = CommandActivity.command.items.map { it.price }.sum()

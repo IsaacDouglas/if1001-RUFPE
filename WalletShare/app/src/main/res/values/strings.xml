@@ -7,4 +7,5 @@
     <string name="title_activity_command">CommandActivity</string>
     <string name="title_tab_text_1">Command</string>
     <string name="title_tab_text_2">Friends</string>
+    <string name="title_activity_item">Item</string>
 </resources>

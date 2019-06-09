@@ -81,8 +81,9 @@ class HistoricFragment : Fragment() {
 
             init {
                 item.setOnClickListener {
+                    CommandActivity.command = command
                     val intent = Intent(c, CommandActivity::class.java)
-                    intent.putExtra("command", command)
+                    intent.putExtra("isNew", false)
                     startActivity(intent)
                 }
             }

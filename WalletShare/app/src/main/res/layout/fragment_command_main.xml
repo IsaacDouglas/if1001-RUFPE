@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
-            android:id="@+id/historic_action"
+            android:id="@+id/command_main_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
