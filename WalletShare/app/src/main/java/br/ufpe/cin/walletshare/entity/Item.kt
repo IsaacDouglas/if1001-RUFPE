@@ -3,9 +3,10 @@ package br.ufpe.cin.walletshare.entity
 import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import java.io.Serializable
 
 @Entity
-class Item {
+class Item: Serializable {
 
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L

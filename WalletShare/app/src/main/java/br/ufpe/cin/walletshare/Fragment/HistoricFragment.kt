@@ -12,7 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
+import br.ufpe.cin.walletshare.Activity.CommandActivity
 import br.ufpe.cin.walletshare.Activity.ParticipantsActivity
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Command
@@ -44,8 +44,7 @@ class HistoricFragment : Fragment() {
     }
 
     companion object Factory {
-        fun newInstance(): HistoricFragment =
-            HistoricFragment()
+        fun newInstance(): HistoricFragment = HistoricFragment()
         var commands: MutableList<Command> = mutableListOf()
     }
 
@@ -63,6 +62,7 @@ class HistoricFragment : Fragment() {
             holder.date.text = item.date.toSimpleString()
             holder.participants.text = item.people.map { it.name }.joinToString { it }
             holder.price.text = item.total().currencyFormatting()
+            holder.command = items.get(position)
         }
 
         override fun getItemCount(): Int {
@@ -77,10 +77,13 @@ class HistoricFragment : Fragment() {
             val date: TextView = item.item_historic_date
             val participants: TextView = item.item_historic_participants
             val price: TextView = item.item_historic_price
+            lateinit var command: Command
 
             init {
                 item.setOnClickListener {
-                    Toast.makeText(c, date.text, Toast.LENGTH_SHORT).show()
+                    val intent = Intent(c, CommandActivity::class.java)
+                    intent.putExtra("command", command)
+                    startActivity(intent)
                 }
             }
         }
