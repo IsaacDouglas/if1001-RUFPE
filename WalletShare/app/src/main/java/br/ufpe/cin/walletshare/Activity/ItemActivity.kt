@@ -15,6 +15,7 @@ import android.widget.TextView
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Friend
 import br.ufpe.cin.walletshare.entity.Item
+import br.ufpe.cin.walletshare.util.currencyFormatting
 
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.activity_item.toolbar
@@ -30,42 +31,67 @@ class ItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_item)
         setSupportActionBar(toolbar)
 
-        CommandActivity.command.people.forEach { _ ->
-            selected.add(false)
-        }
-
         item_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = ItemAdapter(context, CommandActivity.command.people)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
-        item_action.setOnClickListener {
+        val isNew = intent.getBooleanExtra("isNew", true)
 
-            var selectedFriend: MutableList<Friend> = mutableListOf()
-            for (i in 0 until selected.count()) {
-                if (selected[i]) {
-                    selectedFriend.add(CommandActivity.command.people[i])
-                }
+        CommandActivity.command.people.forEach {
+            if (isNew) {
+                selected.add(false)
+            }else{
+                selected.add(item.people.contains(it))
             }
+        }
+
+        if (!isNew) {
+            item_name_edit_text.setText(item.name)
+            item_price_edit_text.setText(item.price.currencyFormatting())
+        }
+
+        item_action.setOnClickListener {
 
             val name = item_name_edit_text.text.toString()
             val price = item_price_edit_text.text.toString()
+
+            val selectedFriend = selectedFriend()
 
             if (selectedFriend.isEmpty()) {
                 Snackbar.make(it, "Selecione no minimo um amigo", Snackbar.LENGTH_LONG).show()
             }else if (name.isEmpty()) {
                 Snackbar.make(it, "Preencha o nome do item", Snackbar.LENGTH_LONG).show()
             }else{
-                val item = Item()
-                item.price = 20.0
-                item.name = name
-                item.people = selectedFriend
-                CommandActivity.command.items.add(item)
-
+                if (isNew) {
+                    val item = Item()
+                    item.price = 20.0
+                    item.name = name
+                    item.people = selectedFriend
+                    CommandActivity.command.items.add(item)
+                }else{
+                    item.price = 20.0
+                    item.name = name
+                    item.people = selectedFriend
+                }
                 finish()
             }
         }
+    }
+
+    companion object Factory {
+        var item: Item = Item()
+    }
+
+    private fun selectedFriend(): MutableList<Friend> {
+        var selectedFriend: MutableList<Friend> = mutableListOf()
+        for (i in 0 until selected.count()) {
+            if (selected[i]) {
+                selectedFriend.add(CommandActivity.command.people[i])
+            }
+        }
+        return  selectedFriend
     }
 
     internal inner class ItemAdapter (
@@ -81,6 +107,7 @@ class ItemActivity : AppCompatActivity() {
             val item = items[position]
             holder.title.text = item.name
             holder.index = position
+            holder.checkBox.isChecked = selected[position]
         }
 
         override fun getItemCount(): Int {
@@ -93,7 +120,7 @@ class ItemActivity : AppCompatActivity() {
 
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
             val title: TextView = item.item_participants_title
-            private val checkBox: CheckBox = item.item_participants_check_box
+            val checkBox: CheckBox = item.item_participants_check_box
             var index: Int = 0
 
             init {

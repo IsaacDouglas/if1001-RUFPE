@@ -15,7 +15,10 @@ import br.ufpe.cin.walletshare.Activity.CommandActivity
 
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Friend
+import br.ufpe.cin.walletshare.util.currencyFormatting
+import br.ufpe.cin.walletshare.util.percent
 import kotlinx.android.synthetic.main.fragment_command_friends.*
+import kotlinx.android.synthetic.main.item_command_friends.view.*
 import kotlinx.android.synthetic.main.item_friends_simple.view.*
 
 class CommandFriendsFragment : Fragment() {
@@ -44,13 +47,22 @@ class CommandFriendsFragment : Fragment() {
         var items: MutableList<Friend>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
-            val view = LayoutInflater.from(c).inflate(R.layout.item_friends_simple, parent, false)
+            val view = LayoutInflater.from(c).inflate(R.layout.item_command_friends, parent, false)
             return ItemHolder(view)
         }
 
         override fun onBindViewHolder(holder: ItemHolder, position: Int) {
             val item = items[position]
             holder.title.text = item.name
+
+            val price1 = CommandActivity.command.itemFor(item).map { it.dividedPrice() ?: 0.0 }.sum()
+            val price2 = CommandActivity.command.split()
+
+            holder.normal1.text = price1.currencyFormatting()
+            holder.normal2.text = "+10%, " + price1.percent(0.1).currencyFormatting()
+
+            holder.divided1.text = price2.currencyFormatting()
+            holder.divided2.text = "+10%, " + price2.percent(0.1).currencyFormatting()
         }
 
         override fun getItemCount(): Int {
@@ -62,7 +74,11 @@ class CommandFriendsFragment : Fragment() {
         }
 
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
-            val title: TextView = item.item_friends_simple_title
+            val title: TextView = item.item_command_friends_name
+            val normal1: TextView = item.item_command_friends_normal_1
+            val normal2: TextView = item.item_command_friends_normal_2
+            val divided1: TextView = item.item_command_friends_divided_1
+            val divided2: TextView = item.item_command_friends_divided_2
 
             init {
                 item.setOnClickListener {

@@ -66,6 +66,7 @@ class CommandMainFragment : Fragment() {
             val item = items[position]
             holder.title.text = item.name
             holder.subtitle.text = item.price.currencyFormatting()
+            holder.item_ = item
         }
 
         override fun getItemCount(): Int {
@@ -79,10 +80,14 @@ class CommandMainFragment : Fragment() {
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
             val title: TextView = item.item_command_main_title
             val subtitle: TextView = item.item_command_main_subtitle
+            lateinit var item_: Item
 
             init {
                 item.setOnClickListener {
-                    Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
+                    ItemActivity.item = item_
+                    val intent = Intent(context, ItemActivity::class.java)
+                    intent.putExtra("isNew", false)
+                    startActivity(intent)
                 }
             }
         }
