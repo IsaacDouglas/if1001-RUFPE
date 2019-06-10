@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,8 @@ import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Friend
 import br.ufpe.cin.walletshare.entity.Item
 import br.ufpe.cin.walletshare.util.currencyFormatting
+import br.ufpe.cin.walletshare.util.currencyFormattingToDouble
+import br.ufpe.cin.walletshare.util.currencyInputFormatting
 
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.activity_item.toolbar
@@ -47,41 +51,64 @@ class ItemActivity : AppCompatActivity() {
             }
         }
 
-        if (!isNew) {
+        if (isNew) {
+            item_price_edit_text.setText(0.0.currencyFormatting())
+        }else{
             item_name_edit_text.setText(item.name)
             item_price_edit_text.setText(item.price.currencyFormatting())
         }
 
-        item_action.setOnClickListener {
+        var currency = ""
 
-            val name = item_name_edit_text.text.toString()
-            val price = item_price_edit_text.text.toString()
-
-            val selectedFriend = selectedFriend()
-
-            if (selectedFriend.isEmpty()) {
-                Snackbar.make(it, "Selecione no minimo um amigo", Snackbar.LENGTH_LONG).show()
-            }else if (name.isEmpty()) {
-                Snackbar.make(it, "Preencha o nome do item", Snackbar.LENGTH_LONG).show()
-            }else{
-                if (isNew) {
-                    val item = Item()
-                    item.price = 20.0
-                    item.name = name
-                    item.people = selectedFriend
-                    CommandActivity.command.items.add(item)
-                }else{
-                    item.price = 20.0
-                    item.name = name
-                    item.people = selectedFriend
-                }
-                finish()
+        item_price_edit_text.addTextChangedListener(object:TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                item_price_edit_text.setSelection(currency.length)
             }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                if (s.toString() == currency) {
+                    return
+                }
+                val text = item_price_edit_text.text.toString()
+                currency = text.currencyInputFormatting()
+                item_price_edit_text.setText(currency)
+            }
+        })
+
+        item_action.setOnClickListener {
+            itemAction(it, isNew)
         }
     }
 
     companion object Factory {
         var item: Item = Item()
+    }
+
+    private fun itemAction(view: View, isNew: Boolean) {
+        val name = item_name_edit_text.text.toString()
+        val price = item_price_edit_text.text.toString()
+        val selectedFriend = selectedFriend()
+
+        if (selectedFriend.isEmpty()) {
+            Snackbar.make(view, "Selecione no minimo um amigo", Snackbar.LENGTH_LONG).show()
+        }else if (name.isEmpty()) {
+            Snackbar.make(view, "Preencha o nome do item", Snackbar.LENGTH_LONG).show()
+        }else{
+            if (isNew) {
+                val item = Item()
+                item.price = price.currencyFormattingToDouble()
+                item.name = name
+                item.people = selectedFriend
+                CommandActivity.command.items.add(item)
+            }else{
+                item.price = price.currencyFormattingToDouble()
+                item.name = name
+                item.people = selectedFriend
+            }
+            finish()
+        }
     }
 
     private fun selectedFriend(): MutableList<Friend> {
