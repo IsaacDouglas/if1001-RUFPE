@@ -1,6 +1,5 @@
 package br.ufpe.cin.walletshare.Fragment
 
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,6 +15,7 @@ import br.ufpe.cin.walletshare.Activity.CommandActivity
 import br.ufpe.cin.walletshare.Activity.ParticipantsActivity
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Command
+import br.ufpe.cin.walletshare.util.Data
 import br.ufpe.cin.walletshare.util.currencyFormatting
 import br.ufpe.cin.walletshare.util.toSimpleString
 import kotlinx.android.synthetic.main.fragment_historic.*
@@ -33,7 +33,8 @@ class HistoricFragment : Fragment() {
 
         historic_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ItemAdapter(context, commands)
+            val list = Data.getInstance(context).commandDao.all().toMutableList()
+            adapter = ItemAdapter(context, list)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
@@ -45,7 +46,6 @@ class HistoricFragment : Fragment() {
 
     companion object Factory {
         fun newInstance(): HistoricFragment = HistoricFragment()
-        var commands: MutableList<Command> = mutableListOf()
     }
 
     internal inner class ItemAdapter (

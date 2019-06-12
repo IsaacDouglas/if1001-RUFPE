@@ -23,7 +23,6 @@ import br.ufpe.cin.walletshare.util.currencyInputFormatting
 
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.activity_item.toolbar
-import kotlinx.android.synthetic.main.activity_participants.*
 import kotlinx.android.synthetic.main.item_participants.view.*
 
 class ItemActivity : AppCompatActivity() {

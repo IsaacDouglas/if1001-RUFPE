@@ -1,6 +1,5 @@
 package br.ufpe.cin.walletshare.Fragment
 
-
 import android.app.AlertDialog
 import android.content.Context
 import android.os.Bundle
@@ -31,20 +30,23 @@ class FriendsFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        friends_recycler_view.apply {
-            layoutManager = LinearLayoutManager(context)
-            val list = Data.getInstance(context).friendDao.all().toMutableList()
-            adapter = ItemAdapter(context, list)
-            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-        }
+        friends_recycler_view.layoutManager = LinearLayoutManager(context)
+        friends_recycler_view.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        updateList()
 
         friends_action.setOnClickListener {
             dialogInputText("New friend") { name ->
                 val friend = Friend()
                 friend.name = name
                 Data.getInstance(requireContext()).friendDao.add(friend)
+                updateList()
             }
         }
+    }
+
+    private fun updateList() {
+        val list = Data.getInstance(requireContext()).friendDao.all().toMutableList()
+        friends_recycler_view.adapter = ItemAdapter(requireContext(), list)
     }
 
     companion object Factory {

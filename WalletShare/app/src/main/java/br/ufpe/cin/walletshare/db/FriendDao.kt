@@ -9,7 +9,7 @@ import br.ufpe.cin.walletshare.entity.Friend
 @Dao
 interface FriendDao {
 
-    @Query("SELECT * FROM friend")
+    @Query("SELECT * FROM friend ORDER by name")
     fun all(): List<Friend>
 
     @Insert

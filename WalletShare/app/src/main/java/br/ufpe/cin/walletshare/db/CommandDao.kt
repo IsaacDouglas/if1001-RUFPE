@@ -1,18 +1,15 @@
 package br.ufpe.cin.walletshare.db
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Delete
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
+import android.arch.persistence.room.*
 import br.ufpe.cin.walletshare.entity.Command
 
 @Dao
 interface CommandDao {
 
-    @Query("SELECT * FROM command")
+    @Query("SELECT * FROM command ORDER BY date DESC")
     fun all(): List<Command>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun add(vararg command: Command)
 
     @Delete

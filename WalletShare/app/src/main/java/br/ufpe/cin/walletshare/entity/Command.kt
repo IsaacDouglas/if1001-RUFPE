@@ -1,6 +1,5 @@
 package br.ufpe.cin.walletshare.entity
 
-import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
@@ -13,9 +12,7 @@ class Command: Serializable {
     var id: Long = 0L
     var name: String = ""
     var date: Date = Date()
-    @Embedded
     var people: MutableList<Friend> = mutableListOf()
-    @Embedded
     var items: MutableList<Item> = mutableListOf()
 
     fun total(): Double {

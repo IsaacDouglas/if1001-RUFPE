@@ -19,7 +19,6 @@ import br.ufpe.cin.walletshare.util.currencyFormatting
 import br.ufpe.cin.walletshare.util.percent
 import kotlinx.android.synthetic.main.fragment_command_friends.*
 import kotlinx.android.synthetic.main.item_command_friends.view.*
-import kotlinx.android.synthetic.main.item_friends_simple.view.*
 
 class CommandFriendsFragment : Fragment() {
 
@@ -55,14 +54,14 @@ class CommandFriendsFragment : Fragment() {
             val item = items[position]
             holder.title.text = item.name
 
-            val price1 = CommandActivity.command.itemFor(item).map { it.dividedPrice() ?: 0.0 }.sum()
-            val price2 = CommandActivity.command.split()
+            val normal = CommandActivity.command.valueFor(item)
+            val divided = CommandActivity.command.split()
 
-            holder.normal1.text = price1.currencyFormatting()
-            holder.normal2.text = "+10%, " + price1.percent(0.1).currencyFormatting()
+            holder.normal1.text = normal.currencyFormatting()
+            holder.normal2.text = "+10%, " + normal.percent(0.1).currencyFormatting()
 
-            holder.divided1.text = price2.currencyFormatting()
-            holder.divided2.text = "+10%, " + price2.percent(0.1).currencyFormatting()
+            holder.divided1.text = divided.currencyFormatting()
+            holder.divided2.text = "+10%, " + divided.percent(0.1).currencyFormatting()
         }
 
         override fun getItemCount(): Int {
