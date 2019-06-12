@@ -1,6 +1,5 @@
 package br.ufpe.cin.walletshare.Fragment
 
-
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +10,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import br.ufpe.cin.walletshare.Activity.CommandActivity
 import br.ufpe.cin.walletshare.Activity.ItemActivity
 
@@ -80,6 +79,7 @@ class CommandMainFragment : Fragment() {
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
             val title: TextView = item.item_command_main_title
             val subtitle: TextView = item.item_command_main_subtitle
+            private val button: Button = item.item_command_main_button
             lateinit var item_: Item
 
             init {
@@ -88,6 +88,11 @@ class CommandMainFragment : Fragment() {
                     val intent = Intent(context, ItemActivity::class.java)
                     intent.putExtra("isNew", false)
                     startActivity(intent)
+                }
+
+                button.setOnClickListener {
+                    CommandActivity.command.remove(item_)
+                    command_main_recycler_view.adapter?.notifyDataSetChanged()
                 }
             }
         }

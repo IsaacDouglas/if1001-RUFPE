@@ -3,26 +3,42 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
-    <TextView
-            android:id="@+id/item_command_main_title"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
+    <LinearLayout
+            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Item"
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <TextView
-            android:id="@+id/item_command_main_subtitle"
-            android:layout_marginLeft="8dp"
+        <TextView
+                android:id="@+id/item_command_main_title"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Item"
+                android:textSize="20sp" />
+
+        <TextView
+                android:id="@+id/item_command_main_subtitle"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="R$0,00"
+                android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/item_command_main_button"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="R$0,00"
-            android:textSize="15sp" />
+            android:text="@string/title_delete"
+            android:focusable="false"/>
 
 </LinearLayout>
