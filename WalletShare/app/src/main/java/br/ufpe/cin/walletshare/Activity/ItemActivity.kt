@@ -46,7 +46,8 @@ class ItemActivity : AppCompatActivity() {
             if (isNew) {
                 selected.add(false)
             }else{
-                selected.add(item.people.contains(it))
+                val isEmpty = item.people.map { f -> f.name.equals(it.name) }.filter{ it }.isEmpty()
+                selected.add(!isEmpty)
             }
         }
 

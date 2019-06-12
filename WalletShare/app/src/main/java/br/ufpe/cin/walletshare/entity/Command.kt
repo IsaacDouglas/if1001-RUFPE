@@ -29,7 +29,7 @@ class Command: Serializable {
     }
 
     fun itemFor(friend: Friend): List<Item> {
-        return items.filter { it.people.contains(friend) }
+        return items.filter { !it.people.map { f -> f.name.equals(friend.name) }.filter { it }.isEmpty() }
     }
 
     fun remove(friend: Friend) {
