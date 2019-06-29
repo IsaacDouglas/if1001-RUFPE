@@ -15,6 +15,7 @@ import android.widget.Button
 import android.widget.TextView
 import br.ufpe.cin.walletshare.Activity.CommandActivity
 import br.ufpe.cin.walletshare.Activity.ItemActivity
+import br.ufpe.cin.walletshare.Activity.ui.main.SectionsPagerAdapter
 
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Item
@@ -110,6 +111,7 @@ class CommandMainFragment : Fragment() {
                 CommandActivity.command.remove(item)
                 command_main_recycler_view.adapter?.notifyDataSetChanged()
                 reloadPrices()
+                SectionsPagerAdapter.commandFriendsFragment.reload()
                 dialog.dismiss()
             }
 

@@ -47,6 +47,10 @@ class CommandFriendsFragment : Fragment() {
         }
     }
 
+    fun reload() {
+        command_friends_recycler_view.adapter?.notifyDataSetChanged()
+    }
+
     companion object Factory {
         fun newInstance(): CommandFriendsFragment = CommandFriendsFragment()
     }

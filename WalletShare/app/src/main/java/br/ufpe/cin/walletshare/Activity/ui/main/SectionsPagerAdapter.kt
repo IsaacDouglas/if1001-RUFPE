@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import br.ufpe.cin.walletshare.Fragment.CommandFriendsFragment
 import br.ufpe.cin.walletshare.Fragment.CommandMainFragment
-import br.ufpe.cin.walletshare.Fragment.FriendsFragment
 import br.ufpe.cin.walletshare.R
 
 private val TAB_TITLES = arrayOf(
@@ -21,9 +20,13 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : 
         // Return a PlaceholderFragment (defined as a static inner class below).
 
         if (position == 1) {
-            return CommandFriendsFragment.newInstance()
+            val commandFriendsFragment = CommandFriendsFragment.newInstance()
+            Factory.commandFriendsFragment = commandFriendsFragment
+            return commandFriendsFragment
         }else{
-            return CommandMainFragment.newInstance()
+            val commandMainFragment = CommandMainFragment.newInstance()
+            Factory.commandMainFragment = commandMainFragment
+            return commandMainFragment
         }
     }
 
@@ -34,5 +37,10 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : 
     override fun getCount(): Int {
         // Show 2 total pages.
         return 2
+    }
+
+    companion object Factory {
+        lateinit var commandFriendsFragment :CommandFriendsFragment
+        lateinit var commandMainFragment: CommandMainFragment
     }
 }
