@@ -13,7 +13,7 @@ interface FriendDao {
     fun all(): List<Friend>
 
     @Insert
-    fun add(vararg friend: Friend)
+    fun insert(friend: Friend): Long
 
     @Delete
     fun remove(vararg friend: Friend)

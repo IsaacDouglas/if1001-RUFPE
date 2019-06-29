@@ -44,6 +44,10 @@ class CommandMainFragment : Fragment() {
             startActivity(intent)
         }
 
+        reloadPrices()
+    }
+
+    private fun reloadPrices() {
         val value = CommandActivity.command.items.map { it.price }.sum()
         command_main_total.text = value.currencyFormatting()
         command_main_info.text = "+10%, " + value.percent(0.1).currencyFormatting()
@@ -105,6 +109,7 @@ class CommandMainFragment : Fragment() {
             builder.setPositiveButton(android.R.string.ok) {dialog, _ ->
                 CommandActivity.command.remove(item)
                 command_main_recycler_view.adapter?.notifyDataSetChanged()
+                reloadPrices()
                 dialog.dismiss()
             }
 

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import br.ufpe.cin.walletshare.Activity.ui.main.SectionsPagerAdapter
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Command
@@ -34,7 +35,7 @@ class CommandActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         if (!isDelete) {
-            Data.getInstance(baseContext).commandDao.add(command)
+            command.id = Data.getInstance(baseContext).commandDao.insert(command)
         }
     }
 
