@@ -9,8 +9,8 @@ import br.ufpe.cin.walletshare.Fragment.CommandMainFragment
 import br.ufpe.cin.walletshare.R
 
 private val TAB_TITLES = arrayOf(
-    R.string.title_tab_text_1,
-    R.string.title_tab_text_2
+    R.string.order_sheet,
+    R.string.friends
 )
 
 class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {

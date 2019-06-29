@@ -2,6 +2,7 @@ package br.ufpe.cin.walletshare.Activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -52,10 +53,26 @@ class CommandActivity : AppCompatActivity() {
         val id = item?.itemId
 
         if (id == R.id.action_delete) {
+            deleteDialog()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(android.R.string.dialog_alert_title)
+        builder.setMessage(getString(R.string.delete_order_sheet))
+
+        builder.setPositiveButton(android.R.string.ok) {dialog, _ ->
             Data.getInstance(baseContext).commandDao.remove(command)
             isDelete = true
             finish()
+            dialog.dismiss()
         }
-        return super.onOptionsItemSelected(item)
+
+        builder.setNegativeButton(android.R.string.cancel) {dialog, _ ->
+            dialog.cancel()
+        }
+        builder.show()
     }
 }

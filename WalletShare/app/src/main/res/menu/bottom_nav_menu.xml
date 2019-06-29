@@ -4,11 +4,11 @@
     <item
             android:id="@+id/navigation_historic"
             android:icon="@drawable/ic_historic"
-            android:title="@string/title_historic"/>
+            android:title="@string/order_sheet"/>
 
     <item
             android:id="@+id/navigation_friends"
             android:icon="@drawable/ic_person"
-            android:title="@string/title_friends"/>
+            android:title="@string/friends"/>
 
 </menu>

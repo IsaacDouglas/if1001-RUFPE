@@ -104,8 +104,8 @@ class CommandMainFragment : Fragment() {
 
         private fun deleteDialog(item: Item) {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle(R.string.title_delete)
-            builder.setMessage(item.name)
+            builder.setTitle(android.R.string.dialog_alert_title)
+            builder.setMessage(String.format(getString(R.string.delete_item), item.name))
 
             builder.setPositiveButton(android.R.string.ok) {dialog, _ ->
                 CommandActivity.command.remove(item)

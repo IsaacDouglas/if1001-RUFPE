@@ -86,9 +86,7 @@ class FriendsFragment : Fragment() {
                     Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
                 }
                 button.setOnClickListener {
-                    items.remove(friend)
-                    Data.getInstance(c).friendDao.remove(friend!!)
-                    friends_recycler_view.adapter?.notifyDataSetChanged()
+                    deleteDialog(friend!!, items)
                 }
             }
         }
@@ -114,6 +112,24 @@ class FriendsFragment : Fragment() {
         }
 
         builder.setNegativeButton(android.R.string.cancel) { dialog, _ ->
+            dialog.cancel()
+        }
+        builder.show()
+    }
+
+    private fun deleteDialog(friend: Friend, items: MutableList<Friend>) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle(android.R.string.dialog_alert_title)
+        builder.setMessage(String.format(getString(R.string.delete_item), friend.name))
+
+        builder.setPositiveButton(android.R.string.ok) {dialog, _ ->
+            items.remove(friend)
+            Data.getInstance(requireContext()).friendDao.remove(friend)
+            friends_recycler_view.adapter?.notifyDataSetChanged()
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton(android.R.string.cancel) {dialog, _ ->
             dialog.cancel()
         }
         builder.show()

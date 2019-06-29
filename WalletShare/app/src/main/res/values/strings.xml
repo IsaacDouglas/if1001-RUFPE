@@ -1,18 +1,17 @@
 <resources>
     <string name="app_name">Wallet Share</string>
-    <string name="title_historic">Historic</string>
-    <string name="title_friends">Friends</string>
-    <string name="title_delete">Delete</string>
-    <string name="title_participants">Participants</string>
-    <string name="title_activity_command">CommandActivity</string>
-    <string name="title_tab_text_1">Command</string>
-    <string name="title_tab_text_2">Friends</string>
-    <string name="title_activity_item">Item</string>
-    <string name="title_command">Command</string>
+    <string name="historic">Historic</string>
+    <string name="friends">Friends</string>
+    <string name="delete">Delete</string>
+    <string name="participants">Participants</string>
+    <string name="item">Item</string>
+    <string name="order_sheet">Order sheet</string>
     <string name="individually">Individually</string>
     <string name="equally">Equally</string>
     <string name="new_friend">New friend</string>
     <string name="select_friend">Select at least one friend</string>
     <string name="fill_item_name">Fill in the item name</string>
     <string name="division">Division</string>
+    <string name="delete_item">You would like to delete \"%s\"</string>
+    <string name="delete_order_sheet">You want to delete this order sheet</string>
 </resources>
