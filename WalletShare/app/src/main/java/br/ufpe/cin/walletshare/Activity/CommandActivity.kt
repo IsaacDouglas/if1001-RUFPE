@@ -34,7 +34,6 @@ class CommandActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         if (!isDelete) {
-            val command = command
             Data.getInstance(baseContext).commandDao.add(command)
         }
     }

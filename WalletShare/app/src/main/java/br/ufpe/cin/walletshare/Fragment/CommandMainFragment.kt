@@ -1,5 +1,6 @@
 package br.ufpe.cin.walletshare.Fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -91,10 +92,26 @@ class CommandMainFragment : Fragment() {
                 }
 
                 button.setOnClickListener {
-                    CommandActivity.command.remove(item_)
-                    command_main_recycler_view.adapter?.notifyDataSetChanged()
+                    deleteDialog(item_)
                 }
             }
+        }
+
+        private fun deleteDialog(item: Item) {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle(R.string.title_delete)
+            builder.setMessage(item.name)
+
+            builder.setPositiveButton(android.R.string.ok) {dialog, _ ->
+                CommandActivity.command.remove(item)
+                command_main_recycler_view.adapter?.notifyDataSetChanged()
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton(android.R.string.cancel) {dialog, _ ->
+                dialog.cancel()
+            }
+            builder.show()
         }
     }
 }
