@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Wallet Share</string>
+    <string name="historic">Histórico</string>
+    <string name="friends">Amigos</string>
+    <string name="delete">Excluir</string>
+    <string name="participants">Participantes</string>
+    <string name="item">Item</string>
+    <string name="order_sheet">Comanda</string>
+    <string name="individually">Individualmente</string>
+    <string name="equally">Igualmente</string>
+    <string name="new_friend">Novo amigo</string>
+    <string name="select_friend">Selecione pelo menos um amigo</string>
+    <string name="fill_item_name">Preencha o nome do item</string>
+    <string name="division">Divisão</string>
+    <string name="delete_item">Você gostaria de excluir \"%s\"</string>
+    <string name="delete_order_sheet">Você deseja excluir esta comanda</string>
+    <string name="name">Nome</string>
+    <string name="price">Preço</string>
+</resources>
