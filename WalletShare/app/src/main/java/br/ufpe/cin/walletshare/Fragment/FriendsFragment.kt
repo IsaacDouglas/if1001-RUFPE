@@ -35,7 +35,7 @@ class FriendsFragment : Fragment() {
         updateList()
 
         friends_action.setOnClickListener {
-            dialogInputText("New friend") { name ->
+            dialogInputText(getString(R.string.new_friend)) { name ->
                 val friend = Friend()
                 friend.name = name
                 Data.getInstance(requireContext()).friendDao.add(friend)

@@ -35,6 +35,16 @@ class CommandFriendsFragment : Fragment() {
             adapter = ItemAdapter(context, CommandActivity.command.people)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
+
+        radio_equally.setOnClickListener {
+            command_friends_recycler_view.adapter?.notifyDataSetChanged()
+        }
+        check_percent.setOnClickListener {
+            command_friends_recycler_view.adapter?.notifyDataSetChanged()
+        }
+        radio_individually.setOnClickListener {
+            command_friends_recycler_view.adapter?.notifyDataSetChanged()
+        }
     }
 
     companion object Factory {
@@ -57,11 +67,16 @@ class CommandFriendsFragment : Fragment() {
             val normal = CommandActivity.command.valueFor(item)
             val divided = CommandActivity.command.split()
 
-            holder.normal1.text = normal.currencyFormatting()
-            holder.normal2.text = "+10%, " + normal.percent(0.1).currencyFormatting()
+            if (radio_equally.isChecked && check_percent.isChecked) {
+                holder.price.text = divided.percent(0.1).currencyFormatting()
+            }else if (radio_equally.isChecked) {
+                holder.price.text = divided.currencyFormatting()
+            }else if (radio_individually.isChecked && check_percent.isChecked) {
+                holder.price.text = normal.percent(0.1).currencyFormatting()
+            }else if (radio_individually.isChecked) {
+                holder.price.text = normal.currencyFormatting()
+            }
 
-            holder.divided1.text = divided.currencyFormatting()
-            holder.divided2.text = "+10%, " + divided.percent(0.1).currencyFormatting()
         }
 
         override fun getItemCount(): Int {
@@ -74,10 +89,7 @@ class CommandFriendsFragment : Fragment() {
 
         internal inner class ItemHolder(val item: View) : RecyclerView.ViewHolder(item) {
             val title: TextView = item.item_command_friends_name
-            val normal1: TextView = item.item_command_friends_normal_1
-            val normal2: TextView = item.item_command_friends_normal_2
-            val divided1: TextView = item.item_command_friends_divided_1
-            val divided2: TextView = item.item_command_friends_divided_2
+            val price: TextView = item.item_command_friends_price
 
             init {
                 item.setOnClickListener {

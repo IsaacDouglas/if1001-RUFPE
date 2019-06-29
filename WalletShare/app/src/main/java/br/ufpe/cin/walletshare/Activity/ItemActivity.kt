@@ -92,9 +92,9 @@ class ItemActivity : AppCompatActivity() {
         val selectedFriend = selectedFriend()
 
         if (selectedFriend.isEmpty()) {
-            Snackbar.make(view, "Selecione no minimo um amigo", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(view, R.string.select_friend, Snackbar.LENGTH_LONG).show()
         }else if (name.isEmpty()) {
-            Snackbar.make(view, "Preencha o nome do item", Snackbar.LENGTH_LONG).show()
+            Snackbar.make(view, R.string.fill_item_name, Snackbar.LENGTH_LONG).show()
         }else{
             if (isNew) {
                 val item = Item()

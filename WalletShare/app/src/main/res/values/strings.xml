@@ -9,4 +9,10 @@
     <string name="title_tab_text_2">Friends</string>
     <string name="title_activity_item">Item</string>
     <string name="title_command">Command</string>
+    <string name="individually">Individually</string>
+    <string name="equally">Equally</string>
+    <string name="new_friend">New friend</string>
+    <string name="select_friend">Select at least one friend</string>
+    <string name="fill_item_name">Fill in the item name</string>
+    <string name="division">Division</string>
 </resources>
