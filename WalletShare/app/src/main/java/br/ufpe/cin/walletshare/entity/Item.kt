@@ -1,5 +1,6 @@
 package br.ufpe.cin.walletshare.entity
 
+import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
@@ -12,6 +13,9 @@ class Item: Serializable {
     var name: String = ""
     var price: Double = 0.0
     var people: MutableList<Friend> = mutableListOf()
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    var image: ByteArray? = null
 
     fun dividedPrice(): Double? {
         if (people.isEmpty()) {

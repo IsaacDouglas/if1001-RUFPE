@@ -83,7 +83,7 @@ class FriendsFragment : Fragment() {
 
             init {
                 item.setOnClickListener {
-                    Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
                 }
                 button.setOnClickListener {
                     deleteDialog(friend!!, items)

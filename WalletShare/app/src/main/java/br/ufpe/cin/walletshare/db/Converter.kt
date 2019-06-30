@@ -6,7 +6,6 @@ import br.ufpe.cin.walletshare.entity.Item
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Converter {
 

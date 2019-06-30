@@ -16,4 +16,9 @@
     <string name="delete_order_sheet">You want to delete this order sheet</string>
     <string name="name">Name</string>
     <string name="price">Price</string>
+    <string name="select_action">Select action</string>
+    <string name="select_photo_from_gallery">Select photo from gallery</string>
+    <string name="capture_photo_from_camera">Capture photo from camera</string>
+    <string name="without_permission_to_access_the_camera">Without permission to access the camera</string>
+    <string name="failed_to_load_image">Failed to load image</string>
 </resources>

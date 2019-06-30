@@ -97,7 +97,7 @@ class CommandFriendsFragment : Fragment() {
 
             init {
                 item.setOnClickListener {
-                    Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(c, title.text, Toast.LENGTH_SHORT).show()
                 }
             }
         }

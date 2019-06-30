@@ -16,4 +16,9 @@
     <string name="delete_order_sheet">Você deseja excluir esta comanda</string>
     <string name="name">Nome</string>
     <string name="price">Preço</string>
+    <string name="select_action">Selecionar ação</string>
+    <string name="select_photo_from_gallery">Selecione a foto da galeria</string>
+    <string name="capture_photo_from_camera">Capturar foto da câmera</string>
+    <string name="without_permission_to_access_the_camera">Sem permissão para acessar a câmera</string>
+    <string name="failed_to_load_image">Falha ao carregar imagem</string>
 </resources>

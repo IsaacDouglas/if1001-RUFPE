@@ -1,8 +1,14 @@
 package br.ufpe.cin.walletshare.Activity
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
@@ -14,20 +20,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import android.widget.Toast
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Friend
 import br.ufpe.cin.walletshare.entity.Item
-import br.ufpe.cin.walletshare.util.currencyFormatting
-import br.ufpe.cin.walletshare.util.currencyFormattingToDouble
-import br.ufpe.cin.walletshare.util.currencyInputFormatting
+import br.ufpe.cin.walletshare.util.*
 
 import kotlinx.android.synthetic.main.activity_item.*
 import kotlinx.android.synthetic.main.activity_item.toolbar
 import kotlinx.android.synthetic.main.item_participants.view.*
+import java.io.IOException
+import android.Manifest
+import android.support.v4.app.ActivityCompat
 
 class ItemActivity : AppCompatActivity() {
 
     var selected: MutableList<Boolean> = mutableListOf()
+    private val GALLERY = 1
+    private val CAMERA = 2
+    private var image: ByteArray? = null
+    private var CAMERA_REQUEST_CODE = 10
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +68,11 @@ class ItemActivity : AppCompatActivity() {
         }else{
             item_name_edit_text.setText(item.name)
             item_price_edit_text.setText(item.price.currencyFormatting())
+
+            if (item.image != null) {
+                image = item.image
+                item_image_view.setImageBitmap(item.image!!.toBitmap())
+            }
         }
 
         var currency = ""
@@ -80,6 +97,10 @@ class ItemActivity : AppCompatActivity() {
         item_action.setOnClickListener {
             itemAction(it, isNew)
         }
+
+        item_image_view.setOnClickListener {
+            showPictureDialog()
+        }
     }
 
     companion object Factory {
@@ -101,11 +122,13 @@ class ItemActivity : AppCompatActivity() {
                 item.price = price.currencyFormattingToDouble()
                 item.name = name
                 item.people = selectedFriend
+                item.image = image
                 CommandActivity.command.items.add(item)
             }else{
                 item.price = price.currencyFormattingToDouble()
                 item.name = name
                 item.people = selectedFriend
+                item.image = image
             }
             finish()
         }
@@ -167,4 +190,71 @@ class ItemActivity : AppCompatActivity() {
         }
     }
 
+    private fun hasPermission(): Boolean {
+        return (ContextCompat.checkSelfPermission(this@ItemActivity, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            CAMERA_REQUEST_CODE -> {
+                if (hasPermission()) {
+                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(intent, CAMERA)
+                } else {
+                    Toast.makeText(baseContext, R.string.without_permission_to_access_the_camera, Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun showPictureDialog() {
+        val pictureDialog = AlertDialog.Builder(this@ItemActivity)
+        pictureDialog.setTitle(R.string.select_action)
+        val pictureDialogItems = arrayOf(getString(R.string.select_photo_from_gallery), getString(R.string.capture_photo_from_camera))
+        pictureDialog.setItems(pictureDialogItems) { _, which ->
+            when (which) {
+                0 -> choosePhotoFromGallary()
+                1 -> takePhotoFromCamera()
+            }
+        }
+        pictureDialog.show()
+    }
+
+    private fun choosePhotoFromGallary() {
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, GALLERY)
+    }
+
+    private fun takePhotoFromCamera() {
+        if (hasPermission()) {
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(intent, CAMERA)
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), CAMERA_REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (data == null) {
+            return
+        }
+
+        if (requestCode == GALLERY) {
+            val contentURI = data.data
+            try {
+                val bitmap = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, contentURI)
+                item_image_view.setImageBitmap(bitmap)
+                image = bitmap.toByteArray()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                Toast.makeText(applicationContext, R.string.failed_to_load_image, Toast.LENGTH_SHORT).show()
+            }
+        } else if (requestCode == CAMERA) {
+            val bitmap = data.extras!!.get("data") as Bitmap
+            item_image_view.setImageBitmap(bitmap)
+            image = bitmap.toByteArray()
+        }
+    }
 }
