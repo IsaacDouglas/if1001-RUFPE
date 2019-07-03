@@ -11,10 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import br.ufpe.cin.walletshare.Activity.CommandActivity
+import br.ufpe.cin.walletshare.Activity.OrderSheetActivity
 import br.ufpe.cin.walletshare.Activity.ParticipantsActivity
 import br.ufpe.cin.walletshare.R
-import br.ufpe.cin.walletshare.entity.Command
+import br.ufpe.cin.walletshare.entity.OrderSheet
 import br.ufpe.cin.walletshare.util.Data
 import br.ufpe.cin.walletshare.util.currencyFormatting
 import br.ufpe.cin.walletshare.util.toSimpleString
@@ -33,7 +33,7 @@ class HistoricFragment : Fragment() {
 
         historic_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            val list = Data.getInstance(context).commandDao.all().toMutableList()
+            val list = Data.getInstance(context).orderSheetDao.all().toMutableList()
             adapter = ItemAdapter(context, list)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
@@ -50,7 +50,7 @@ class HistoricFragment : Fragment() {
 
     internal inner class ItemAdapter (
         var c: Context,
-        var items: MutableList<Command>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
+        var items: MutableList<OrderSheet>) :  RecyclerView.Adapter<ItemAdapter.ItemHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
             val view = LayoutInflater.from(c).inflate(R.layout.item_historic, parent, false)
@@ -62,7 +62,7 @@ class HistoricFragment : Fragment() {
             holder.date.text = item.date.toSimpleString()
             holder.participants.text = item.people.map { it.name }.joinToString { it }
             holder.price.text = item.total().currencyFormatting()
-            holder.command = items.get(position)
+            holder.orderSheet = items.get(position)
         }
 
         override fun getItemCount(): Int {
@@ -77,12 +77,12 @@ class HistoricFragment : Fragment() {
             val date: TextView = item.item_historic_date
             val participants: TextView = item.item_historic_participants
             val price: TextView = item.item_historic_price
-            lateinit var command: Command
+            lateinit var orderSheet: OrderSheet
 
             init {
                 item.setOnClickListener {
-                    CommandActivity.command = command
-                    val intent = Intent(c, CommandActivity::class.java)
+                    OrderSheetActivity.orderSheet = orderSheet
+                    val intent = Intent(c, OrderSheetActivity::class.java)
                     intent.putExtra("isNew", false)
                     startActivity(intent)
                 }

@@ -48,13 +48,13 @@ class ItemActivity : AppCompatActivity() {
 
         item_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ItemAdapter(context, CommandActivity.command.people)
+            adapter = ItemAdapter(context, OrderSheetActivity.orderSheet.people)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
         val isNew = intent.getBooleanExtra("isNew", true)
 
-        CommandActivity.command.people.forEach {
+        OrderSheetActivity.orderSheet.people.forEach {
             if (isNew) {
                 selected.add(false)
             }else{
@@ -123,7 +123,7 @@ class ItemActivity : AppCompatActivity() {
                 item.name = name
                 item.people = selectedFriend
                 item.image = image
-                CommandActivity.command.items.add(item)
+                OrderSheetActivity.orderSheet.items.add(item)
             }else{
                 item.price = price.currencyFormattingToDouble()
                 item.name = name
@@ -138,7 +138,7 @@ class ItemActivity : AppCompatActivity() {
         var selectedFriend: MutableList<Friend> = mutableListOf()
         for (i in 0 until selected.count()) {
             if (selected[i]) {
-                selectedFriend.add(CommandActivity.command.people[i])
+                selectedFriend.add(OrderSheetActivity.orderSheet.people[i])
             }
         }
         return  selectedFriend

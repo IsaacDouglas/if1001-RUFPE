@@ -6,7 +6,7 @@ import java.io.Serializable
 import java.util.*
 
 @Entity
-class Command: Serializable {
+class OrderSheet: Serializable {
     
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0L

@@ -13,7 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import br.ufpe.cin.walletshare.Activity.CommandActivity
+import br.ufpe.cin.walletshare.Activity.OrderSheetActivity
 import br.ufpe.cin.walletshare.Activity.ItemActivity
 import br.ufpe.cin.walletshare.Activity.ui.main.SectionsPagerAdapter
 
@@ -21,14 +21,14 @@ import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Item
 import br.ufpe.cin.walletshare.util.currencyFormatting
 import br.ufpe.cin.walletshare.util.percent
-import kotlinx.android.synthetic.main.fragment_command_main.*
+import kotlinx.android.synthetic.main.fragment_order_sheet_main.*
 import kotlinx.android.synthetic.main.item_command_main.view.*
 
-class CommandMainFragment : Fragment() {
+class OrderSheetMainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_command_main, container, false)
+        return inflater.inflate(R.layout.fragment_order_sheet_main, container, false)
     }
 
     override fun onResume() {
@@ -36,7 +36,7 @@ class CommandMainFragment : Fragment() {
 
         command_main_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ItemAdapter(context, CommandActivity.command.items)
+            adapter = ItemAdapter(context, OrderSheetActivity.orderSheet.items)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
 
@@ -49,13 +49,13 @@ class CommandMainFragment : Fragment() {
     }
 
     private fun reloadPrices() {
-        val value = CommandActivity.command.items.map { it.price }.sum()
+        val value = OrderSheetActivity.orderSheet.items.map { it.price }.sum()
         command_main_total.text = value.currencyFormatting()
         command_main_info.text = "+10%, " + value.percent(0.1).currencyFormatting()
     }
 
     companion object Factory {
-        fun newInstance(): CommandMainFragment = CommandMainFragment()
+        fun newInstance(): OrderSheetMainFragment = OrderSheetMainFragment()
     }
 
     internal inner class ItemAdapter (
@@ -108,10 +108,10 @@ class CommandMainFragment : Fragment() {
             builder.setMessage(String.format(getString(R.string.delete_item), item.name))
 
             builder.setPositiveButton(android.R.string.ok) {dialog, _ ->
-                CommandActivity.command.remove(item)
+                OrderSheetActivity.orderSheet.remove(item)
                 command_main_recycler_view.adapter?.notifyDataSetChanged()
                 reloadPrices()
-                SectionsPagerAdapter.commandFriendsFragment.reload()
+                SectionsPagerAdapter.orderSheetFriendsFragment.reload()
                 dialog.dismiss()
             }
 

@@ -4,8 +4,8 @@ import android.content.Context
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import br.ufpe.cin.walletshare.Fragment.CommandFriendsFragment
-import br.ufpe.cin.walletshare.Fragment.CommandMainFragment
+import br.ufpe.cin.walletshare.Fragment.OrderSheetFriendsFragment
+import br.ufpe.cin.walletshare.Fragment.OrderSheetMainFragment
 import br.ufpe.cin.walletshare.R
 
 private val TAB_TITLES = arrayOf(
@@ -20,13 +20,13 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : 
         // Return a PlaceholderFragment (defined as a static inner class below).
 
         if (position == 1) {
-            val commandFriendsFragment = CommandFriendsFragment.newInstance()
-            Factory.commandFriendsFragment = commandFriendsFragment
-            return commandFriendsFragment
+            val orderSheetFriendsFragment = OrderSheetFriendsFragment.newInstance()
+            Factory.orderSheetFriendsFragment = orderSheetFriendsFragment
+            return orderSheetFriendsFragment
         }else{
-            val commandMainFragment = CommandMainFragment.newInstance()
-            Factory.commandMainFragment = commandMainFragment
-            return commandMainFragment
+            val orderSheetMainFragment = OrderSheetMainFragment.newInstance()
+            Factory.orderSheetMainFragment = orderSheetMainFragment
+            return orderSheetMainFragment
         }
     }
 
@@ -40,7 +40,7 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) : 
     }
 
     companion object Factory {
-        lateinit var commandFriendsFragment :CommandFriendsFragment
-        lateinit var commandMainFragment: CommandMainFragment
+        lateinit var orderSheetFriendsFragment :OrderSheetFriendsFragment
+        lateinit var orderSheetMainFragment: OrderSheetMainFragment
     }
 }

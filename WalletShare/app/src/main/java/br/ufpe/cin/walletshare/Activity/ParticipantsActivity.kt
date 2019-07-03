@@ -52,7 +52,7 @@ class ParticipantsActivity : AppCompatActivity() {
             }
             people = selectedFriend
 
-            val intent = Intent(applicationContext, CommandActivity::class.java)
+            val intent = Intent(applicationContext, OrderSheetActivity::class.java)
             intent.putExtra("isNew", true)
             startActivity(intent)
             finish()

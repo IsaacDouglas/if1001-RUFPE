@@ -10,21 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
-import br.ufpe.cin.walletshare.Activity.CommandActivity
+import br.ufpe.cin.walletshare.Activity.OrderSheetActivity
 
 import br.ufpe.cin.walletshare.R
 import br.ufpe.cin.walletshare.entity.Friend
 import br.ufpe.cin.walletshare.util.currencyFormatting
 import br.ufpe.cin.walletshare.util.percent
-import kotlinx.android.synthetic.main.fragment_command_friends.*
+import kotlinx.android.synthetic.main.fragment_order_sheet_friends.*
 import kotlinx.android.synthetic.main.item_command_friends.view.*
 
-class CommandFriendsFragment : Fragment() {
+class OrderSheetFriendsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_command_friends, container, false)
+        return inflater.inflate(R.layout.fragment_order_sheet_friends, container, false)
     }
 
     override fun onResume() {
@@ -32,10 +31,10 @@ class CommandFriendsFragment : Fragment() {
 
         command_friends_recycler_view.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = ItemAdapter(context, CommandActivity.command.people)
+            adapter = ItemAdapter(context, OrderSheetActivity.orderSheet.people)
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
-
+        command_friends_action.hide()
         radio_equally.setOnClickListener {
             command_friends_recycler_view.adapter?.notifyDataSetChanged()
         }
@@ -52,7 +51,7 @@ class CommandFriendsFragment : Fragment() {
     }
 
     companion object Factory {
-        fun newInstance(): CommandFriendsFragment = CommandFriendsFragment()
+        fun newInstance(): OrderSheetFriendsFragment = OrderSheetFriendsFragment()
     }
 
     internal inner class ItemAdapter (
@@ -68,8 +67,8 @@ class CommandFriendsFragment : Fragment() {
             val item = items[position]
             holder.title.text = item.name
 
-            val normal = CommandActivity.command.valueFor(item)
-            val divided = CommandActivity.command.split()
+            val normal = OrderSheetActivity.orderSheet.valueFor(item)
+            val divided = OrderSheetActivity.orderSheet.split()
 
             if (radio_equally.isChecked && check_percent.isChecked) {
                 holder.price.text = divided.percent(0.1).currencyFormatting()

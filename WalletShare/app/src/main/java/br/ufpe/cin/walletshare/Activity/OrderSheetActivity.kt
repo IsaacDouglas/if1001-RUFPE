@@ -8,17 +8,17 @@ import android.view.Menu
 import android.view.MenuItem
 import br.ufpe.cin.walletshare.Activity.ui.main.SectionsPagerAdapter
 import br.ufpe.cin.walletshare.R
-import br.ufpe.cin.walletshare.entity.Command
+import br.ufpe.cin.walletshare.entity.OrderSheet
 import br.ufpe.cin.walletshare.util.Data
-import kotlinx.android.synthetic.main.activity_command.*
+import kotlinx.android.synthetic.main.activity_order_sheet.*
 
-class CommandActivity : AppCompatActivity() {
+class OrderSheetActivity : AppCompatActivity() {
 
     private var isDelete = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_command)
+        setContentView(R.layout.activity_order_sheet)
         val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
         view_pager.adapter = sectionsPagerAdapter
         tabs.setupWithViewPager(view_pager)
@@ -26,21 +26,21 @@ class CommandActivity : AppCompatActivity() {
         val isNew = intent.getBooleanExtra ("isNew", true)
 
         if (isNew) {
-            var command = Command()
-            command.people = ParticipantsActivity.people
-            CommandActivity.command = command
+            var orderSheet = OrderSheet()
+            orderSheet.people = ParticipantsActivity.people
+            OrderSheetActivity.orderSheet = orderSheet
         }
     }
 
     override fun onPause() {
         super.onPause()
         if (!isDelete) {
-            command.id = Data.getInstance(baseContext).commandDao.insert(command)
+            orderSheet.id = Data.getInstance(baseContext).orderSheetDao.insert(orderSheet)
         }
     }
 
     companion object Factory {
-        var command: Command = Command()
+        var orderSheet: OrderSheet = OrderSheet()
     }
 
     @SuppressLint("ResourceType")
@@ -64,7 +64,7 @@ class CommandActivity : AppCompatActivity() {
         builder.setMessage(getString(R.string.delete_order_sheet))
 
         builder.setPositiveButton(android.R.string.ok) {dialog, _ ->
-            Data.getInstance(baseContext).commandDao.remove(command)
+            Data.getInstance(baseContext).orderSheetDao.remove(orderSheet)
             isDelete = true
             finish()
             dialog.dismiss()
