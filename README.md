@@ -187,7 +187,7 @@ class Data {
 ---
 Principais telas do aplicativo, mostrando um pouco suas funcionalidades.
 
-|<img src="screenshots/comandas.png" width="200">|<img src="screenshots/amigos.png" width="200">
-|<img src="screenshots/participantes.png" width="200">|<img src="screenshots/comanda.png" width="200">
-|<img src="screenshots/add-imagem.png" width="200">|<img src="screenshots/add-item-1.png" width="200">
+<img src="screenshots/comandas.png" width="200"> <img src="screenshots/amigos.png" width="200">
+<img src="screenshots/participantes.png" width="200"> <img src="screenshots/comanda.png" width="200">
+<img src="screenshots/add-imagem.png" width="200"> <img src="screenshots/add-item-1.png" width="200">
 <img src="screenshots/relatorio.png" width="200">
