@@ -53,7 +53,7 @@ fun itemFor(friend: Friend): List<Item> {
 }
 ```
 
-## Principaos classes
+## Principais classes
 ---
 As classes Item e OrderSheet, foram responsáveis pela logica de divisão de conta.
 ```
@@ -150,6 +150,33 @@ fun String.currencyFormattingToDouble(): Double {
 }
 ```
 
+Outra classe importante foi a Data que ficou responsável por intermediar as chamadas do banco
+```
+class Data {
+    private val nameDatabase: String = "wallet-database"
+    var friendDao: FriendDao
+    var orderSheetDao: OrderSheetDao
+
+    constructor(context: Context) {
+        val database = Room.databaseBuilder(context, AppDatabase::class.java, nameDatabase)
+            .allowMainThreadQueries()
+            .build()
+        friendDao = database.friendDao()
+        orderSheetDao = database.commandDao()
+    }
+
+    companion object Factory {
+        private var instance: Data? = null
+        fun getInstance(context: Context): Data {
+            if (instance == null) {
+                instance = Data(context)
+            }
+            return instance!!
+        }
+    }
+}
+```
+
 ## Arquivos
 ---
 [Video de uso do aplicativo](https://drive.google.com/file/d/13wEF11TCaLK0OHy_zEyeBEswrJwazysg/view?usp=sharing)
@@ -160,10 +187,7 @@ fun String.currencyFormattingToDouble(): Double {
 ---
 Principais telas do aplicativo, mostrando um pouco suas funcionalidades.
 
-<img src="screenshots/comandas.png" width="200">
-<img src="screenshots/amigos.png" width="200">
-<img src="screenshots/participantes.png" width="200">
-<img src="screenshots/comanda.png" width="200">
-<img src="screenshots/add-imagem.png" width="200">
-<img src="screenshots/add-item-1.png" width="200">
+|<img src="screenshots/comandas.png" width="200">|<img src="screenshots/amigos.png" width="200">
+|<img src="screenshots/participantes.png" width="200">|<img src="screenshots/comanda.png" width="200">
+|<img src="screenshots/add-imagem.png" width="200">|<img src="screenshots/add-item-1.png" width="200">
 <img src="screenshots/relatorio.png" width="200">
